@@ -1,0 +1,20 @@
+version: "3.8"
+services:
+    redis:
+        image: redis:7.0.5-alpine
+        networks:
+            - appnetwork
+        ports:
+            - "6379:6379"
+    app:
+        build: ./PocExternalDockerDotnet
+        depends_on:
+            - redis
+        networks:
+            - appnetwork
+        ports:
+            - "8080:80"
+            # - "5253:5253"
+        # command: dotnet watch run
+networks:
+    appnetwork: {}
